@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-display), "Times New Roman", serif;
+  --font-mono: var(--font-mono), "Courier New", monospace;
+  --font-sans: var(--font-mono), "Courier New", monospace;
+}
+
+html,
+body {
+  height: 100%;
+  background: #070707;
+  color: #d8d2c4;
+}
+
+/* ===== DARK · paradox loop animations ===== */
+@keyframes paradox-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+@keyframes paradox-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes paradox-glow-text {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.paradox-ring {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: paradox-pulse 2.4s ease-in-out infinite;
+}
+.paradox-ring--dash {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: paradox-spin 14s linear infinite;
+}
+.paradox-label {
+  animation: paradox-glow-text 2.4s ease-in-out infinite;
+}
