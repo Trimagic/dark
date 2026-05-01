@@ -18,11 +18,14 @@ export type LinkType =
   | "partner"
   | "sibling";
 
+export type Gender = "m" | "f";
+
 export type DarkNode = {
   id: string;
   full: string;
   family: Family;
   dead: boolean;
+  gender: Gender;
   born?: number;
   died?: number;
   occupation?: string;
@@ -45,11 +48,13 @@ export const FAMILY_COLORS: Record<Family, string> = {
 };
 
 export const NODES: DarkNode[] = [
+  // ============== ТИДЕМАНН ==============
   {
     id: "doris",
     full: "Дорис Тидеманн",
     family: "Тидеманн",
     dead: true,
+    gender: "f",
     born: 1922,
     died: 1964,
   },
@@ -58,6 +63,7 @@ export const NODES: DarkNode[] = [
     full: "Эгон Тидеманн",
     family: "Тидеманн",
     dead: true,
+    gender: "m",
     born: 1922,
     died: 1987,
     occupation: "Полицейский",
@@ -67,43 +73,18 @@ export const NODES: DarkNode[] = [
     full: "Клаудия Тидеманн",
     family: "Тидеманн",
     dead: true,
+    gender: "f",
     born: 1942,
     died: 2019,
     occupation: "Директор АЭС",
     aliases: ["Белый Дьявол"],
   },
   {
-    id: "bernd",
-    full: "Бернд Допплер",
-    family: "Допплер",
-    dead: true,
-    born: 1913,
-    died: 1987,
-    occupation: "Директор АЭС",
-  },
-  {
-    id: "greta",
-    full: "Грета Допплер",
-    family: "Допплер",
-    dead: true,
-    occupation: "Домохозяйка",
-  },
-  { id: "anatol", full: "Анатоль Велиев", family: "—", dead: true },
-  {
-    id: "helge",
-    full: "Хельге Допплер",
-    family: "Допплер",
-    dead: true,
-    born: 1943,
-    died: 1986,
-    occupation: "Охранник АЭС",
-  },
-  { id: "ulla", full: "Улла Шмидт", family: "—", dead: true },
-  {
     id: "regina",
     full: "Регина Тидеманн",
     family: "Тидеманн",
     dead: true,
+    gender: "f",
     born: 1971,
     died: 2020,
     occupation: "Владелица отеля",
@@ -113,37 +94,18 @@ export const NODES: DarkNode[] = [
     full: "Александр Тидеманн",
     family: "Тидеманн",
     dead: true,
+    gender: "m",
     born: 1966,
     died: 2020,
     occupation: "Директор АЭС",
     aliases: ["Борис Нивальд"],
   },
   {
-    id: "peter",
-    full: "Петер Допплер",
-    family: "Допплер",
-    dead: true,
-    born: 1970,
-    died: 2020,
-    occupation: "Психотерапевт",
-  },
-  {
-    id: "hanna",
-    full: "Ханна Канвальд",
-    family: "Канвальд",
-    dead: true,
-    born: 1972,
-    died: 1911,
-    occupation: "Массажистка",
-    aliases: ["Ханна Крюгер"],
-    timetravel: true,
-  },
-  { id: "sebastian", full: "Себастьян Крюгер", family: "—", dead: true },
-  {
     id: "silja",
     full: "Силья Тидеманн",
     family: "Тидеманн",
     dead: true,
+    gender: "f",
     born: 1988,
     died: 1910,
     timetravel: true,
@@ -153,26 +115,95 @@ export const NODES: DarkNode[] = [
     full: "Бартош Тидеманн",
     family: "Тидеманн",
     dead: true,
+    gender: "m",
     born: 2003,
     died: 1921,
     occupation: "Студент",
     timetravel: true,
   },
+
+  // ============== ДОППЛЕР ==============
   {
-    id: "hanno",
-    full: "Ханно Таубер",
-    family: "Таубер",
+    id: "bernd",
+    full: "Бернд Допплер",
+    family: "Допплер",
     dead: true,
-    born: 1904,
-    died: 1921,
-    occupation: "Священник",
-    aliases: ["Ной"],
+    gender: "m",
+    born: 1913,
+    died: 1987,
+    occupation: "Директор АЭС",
   },
+  {
+    id: "greta",
+    full: "Грета Допплер",
+    family: "Допплер",
+    dead: true,
+    gender: "f",
+    occupation: "Домохозяйка",
+  },
+  {
+    id: "anatol",
+    full: "Анатоль Велиев",
+    family: "—",
+    dead: true,
+    gender: "m",
+  },
+  {
+    id: "helge",
+    full: "Хельге Допплер",
+    family: "Допплер",
+    dead: true,
+    gender: "m",
+    born: 1943,
+    died: 1986,
+    occupation: "Охранник АЭС",
+  },
+  { id: "ulla", full: "Улла Шмидт", family: "—", dead: true, gender: "f" },
+  {
+    id: "peter",
+    full: "Петер Допплер",
+    family: "Допплер",
+    dead: true,
+    gender: "m",
+    born: 1970,
+    died: 2020,
+    occupation: "Психотерапевт",
+  },
+  {
+    id: "sharlotta",
+    full: "Шарлотта Допплер",
+    family: "Допплер",
+    dead: false,
+    gender: "f",
+    born: 2041,
+    occupation: "Начальник полиции",
+  },
+  {
+    id: "franziska",
+    full: "Франциска Допплер",
+    family: "Допплер",
+    dead: false,
+    gender: "f",
+    born: 2003,
+    occupation: "Студентка",
+  },
+  {
+    id: "elizabeth",
+    full: "Элизабет Допплер",
+    family: "Допплер",
+    dead: false,
+    gender: "f",
+    born: 2011,
+    occupation: "Лидер · 2052",
+  },
+
+  // ============== НИЛЬСЕН ==============
   {
     id: "agnes",
     full: "Агнес Нильсен",
     family: "Нильсен",
     dead: false,
+    gender: "f",
     born: 1910,
   },
   {
@@ -180,15 +211,23 @@ export const NODES: DarkNode[] = [
     full: "Тронте Нильсен",
     family: "Нильсен",
     dead: false,
+    gender: "m",
     born: 1940,
     occupation: "Журналист",
   },
-  { id: "jana", full: "Яна Нильсен", family: "Нильсен", dead: false },
+  {
+    id: "jana",
+    full: "Яна Нильсен",
+    family: "Нильсен",
+    dead: false,
+    gender: "f",
+  },
   {
     id: "ulrich",
     full: "Ульрих Нильсен",
     family: "Нильсен",
     dead: false,
+    gender: "m",
     born: 1971,
     occupation: "Полицейский",
     aliases: ["Инспектор"],
@@ -198,6 +237,7 @@ export const NODES: DarkNode[] = [
     full: "Катарина Нильсен",
     family: "Нильсен",
     dead: true,
+    gender: "f",
     born: 1970,
     died: 1987,
   },
@@ -206,6 +246,7 @@ export const NODES: DarkNode[] = [
     full: "Мадс Нильсен",
     family: "Нильсен",
     dead: true,
+    gender: "m",
     born: 1973,
     died: 1986,
   },
@@ -214,6 +255,7 @@ export const NODES: DarkNode[] = [
     full: "Магнус Нильсен",
     family: "Нильсен",
     dead: false,
+    gender: "m",
     born: 2001,
     occupation: "Студент",
   },
@@ -222,15 +264,62 @@ export const NODES: DarkNode[] = [
     full: "Марта Нильсен",
     family: "Нильсен",
     dead: true,
+    gender: "f",
     born: 2003,
     died: 2020,
     aliases: ["Ева"],
+  },
+  {
+    id: "istok",
+    full: "Исток",
+    family: "Нильсен",
+    dead: true,
+    gender: "m",
+    timetravel: true,
+  },
+
+  // ============== КАНВАЛЬД ==============
+  {
+    id: "daniel",
+    full: "Дэниел Канвальд",
+    family: "Канвальд",
+    dead: true,
+    gender: "m",
+    occupation: "Начальник полиции (1953)",
+  },
+  {
+    id: "ines",
+    full: "Инес Канвальд",
+    family: "Канвальд",
+    dead: false,
+    gender: "f",
+    occupation: "Медсестра",
+  },
+  {
+    id: "sebastian",
+    full: "Себастьян Крюгер",
+    family: "—",
+    dead: true,
+    gender: "m",
+  },
+  {
+    id: "hanna",
+    full: "Ханна Канвальд",
+    family: "Канвальд",
+    dead: true,
+    gender: "f",
+    born: 1972,
+    died: 1911,
+    occupation: "Массажистка",
+    aliases: ["Ханна Крюгер"],
+    timetravel: true,
   },
   {
     id: "mikhael",
     full: "Михаэль Канвальд",
     family: "Канвальд",
     dead: true,
+    gender: "m",
     born: 2008,
     died: 2019,
     occupation: "Художник",
@@ -242,76 +331,115 @@ export const NODES: DarkNode[] = [
     full: "Йонас Канвальд",
     family: "Канвальд",
     dead: true,
+    gender: "m",
     born: 2003,
     died: 2019,
     aliases: ["Адам"],
   },
+
+  // ============== ТАУБЕР ==============
   {
-    id: "istok",
-    full: "Исток",
-    family: "Нильсен",
+    id: "hanno",
+    full: "Ханно Таубер",
+    family: "Таубер",
     dead: true,
-    timetravel: true,
+    gender: "m",
+    born: 1904,
+    died: 1921,
+    occupation: "Священник",
+    aliases: ["Ной"],
   },
-  {
-    id: "sharlotta",
-    full: "Шарлотта Допплер",
-    family: "Допплер",
-    dead: false,
-    born: 2041,
-    occupation: "Начальник полиции",
-  },
-  {
-    id: "franziska",
-    full: "Франциска Допплер",
-    family: "Допплер",
-    dead: false,
-    born: 2003,
-    occupation: "Студентка",
-  },
-  {
-    id: "elizabeth",
-    full: "Элизабет Допплер",
-    family: "Допплер",
-    dead: false,
-    born: 2011,
-    occupation: "Лидер · 2052",
-  },
-  {
-    id: "ines",
-    full: "Инес Канвальд",
-    family: "Канвальд",
-    dead: false,
-    occupation: "Медсестра",
-  },
-  {
-    id: "tannhaus",
-    full: "Х.Г. Таннхаус",
-    family: "Таннхаус",
-    dead: false,
-    occupation: "Часовщик",
-  },
+
+  // ============== АЛЬБЕРС ==============
   {
     id: "helen",
     full: "Хелен Альберс",
     family: "Альберс",
     dead: false,
+    gender: "f",
     born: 1942,
   },
-  { id: "herman", full: "Херманн Альберс", family: "Альберс", dead: false },
+  {
+    id: "herman",
+    full: "Херманн Альберс",
+    family: "Альберс",
+    dead: false,
+    gender: "m",
+  },
+
+  // ============== ОБЕНДОРФ ==============
+  {
+    id: "jurgen",
+    full: "Юрген Обендорф",
+    family: "Обендорф",
+    dead: false,
+    gender: "m",
+    occupation: "Хозяин свалки",
+  },
+  {
+    id: "ulla_o",
+    full: "Улла Обендорф",
+    family: "Обендорф",
+    dead: false,
+    gender: "f",
+  },
   {
     id: "erik",
     full: "Эрик Обендорф",
     family: "Обендорф",
     dead: true,
+    gender: "m",
     born: 2004,
     died: 1953,
+    occupation: "Старшеклассник",
   },
-  { id: "kilian", full: "Килиан Обендорф", family: "Обендорф", dead: false },
+  {
+    id: "kilian",
+    full: "Килиан Обендорф",
+    family: "Обендорф",
+    dead: false,
+    gender: "m",
+  },
+
+  // ============== ТАННХАУС ==============
+  {
+    id: "tannhaus",
+    full: "Х.Г. Таннхаус",
+    family: "Таннхаус",
+    dead: false,
+    gender: "m",
+    occupation: "Часовщик",
+  },
+  {
+    id: "marek",
+    full: "Марек Таннхаус",
+    family: "Таннхаус",
+    dead: true,
+    gender: "m",
+    died: 1971,
+    occupation: "—",
+  },
+  {
+    id: "sonja",
+    full: "Соня Таннхаус",
+    family: "Таннхаус",
+    dead: true,
+    gender: "f",
+    died: 1971,
+  },
+  {
+    id: "charlotte_t",
+    full: "Шарлотта Таннхаус",
+    family: "Таннхаус",
+    dead: true,
+    gender: "f",
+    died: 1971,
+    occupation: "Дочь Марека и Сони",
+  },
 ];
 
 export const LINKS: DarkLink[] = [
-  // partners
+  // ===== partners =====
   { s: "egon", t: "doris", type: "partner" },
   { s: "egon", t: "hanna", type: "partner", note: "через время" },
   { s: "bernd", t: "greta", type: "partner" },
@@ -327,7 +455,13 @@ export const LINKS: DarkLink[] = [
   { s: "istok", t: "agnes", type: "partner" },
   { s: "magnus", t: "franziska", type: "partner" },
   { s: "herman", t: "helen", type: "partner" },
-  // bio parents
+  { s: "jurgen", t: "ulla_o", type: "partner" },
+  { s: "marek", t: "sonja", type: "partner" },
+  // Дорис и Агнес имели роман в 1953 (упомянуто в секциях обеих)
+  { s: "doris", t: "agnes", type: "partner", note: "любовницы (1953)" },
+
+  // ===== bio parents =====
+  // Тидеманн линия
   { s: "egon", t: "claudia", type: "parent" },
   { s: "doris", t: "claudia", type: "parent" },
   { s: "egon", t: "silja", type: "parent" },
@@ -340,9 +474,14 @@ export const LINKS: DarkLink[] = [
   { s: "silja", t: "hanno", type: "parent" },
   { s: "bartosh", t: "agnes", type: "parent" },
   { s: "silja", t: "agnes", type: "parent" },
+
+  // Канвальд линия
+  { s: "daniel", t: "ines", type: "parent" },
   { s: "sebastian", t: "hanna", type: "parent" },
   { s: "mikhael", t: "jonas", type: "parent" },
   { s: "hanna", t: "jonas", type: "parent" },
+
+  // Нильсен линия
   { s: "istok", t: "tronte", type: "parent" },
   { s: "agnes", t: "tronte", type: "parent" },
   { s: "tronte", t: "ulrich", type: "parent" },
@@ -355,6 +494,8 @@ export const LINKS: DarkLink[] = [
   { s: "katarina", t: "marta", type: "parent" },
   { s: "ulrich", t: "mikhael", type: "parent" },
   { s: "katarina", t: "mikhael", type: "parent" },
+
+  // Допплер линия
   { s: "anatol", t: "helge", type: "parent" },
   { s: "greta", t: "helge", type: "parent" },
   { s: "helge", t: "peter", type: "parent" },
@@ -363,18 +504,33 @@ export const LINKS: DarkLink[] = [
   { s: "sharlotta", t: "franziska", type: "parent" },
   { s: "peter", t: "elizabeth", type: "parent" },
   { s: "sharlotta", t: "elizabeth", type: "parent" },
+
+  // Альберс линия
   { s: "herman", t: "katarina", type: "parent" },
   { s: "helen", t: "katarina", type: "parent" },
-  // paradox parents
+
+  // Обендорф линия
+  { s: "jurgen", t: "erik", type: "parent" },
+  { s: "ulla_o", t: "erik", type: "parent" },
+  { s: "jurgen", t: "kilian", type: "parent" },
+  { s: "ulla_o", t: "kilian", type: "parent" },
+
+  // Таннхаус линия (origin world — погибла в 1971)
+  { s: "tannhaus", t: "marek", type: "parent" },
+  { s: "marek", t: "charlotte_t", type: "parent" },
+  { s: "sonja", t: "charlotte_t", type: "parent" },
+
+  // ===== paradox parents =====
   { s: "hanno", t: "sharlotta", type: "paradox_parent" },
   { s: "elizabeth", t: "sharlotta", type: "paradox_parent" },
   { s: "jonas", t: "istok", type: "paradox_parent" },
   { s: "marta", t: "istok", type: "paradox_parent" },
-  // adoptive
+
+  // ===== adoptive =====
   { s: "ines", t: "mikhael", type: "adoptive" },
   { s: "bernd", t: "helge", type: "adoptive" },
-  // siblings
-  { s: "erik", t: "kilian", type: "sibling" },
+  // Таннхаус взял младенца Шарлотту Допплер после гибели своей семьи в 1971
+  { s: "tannhaus", t: "sharlotta", type: "adoptive", note: "приёмный дед" },
 ];
 
 // ===== precomputed lookup maps =====

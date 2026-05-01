@@ -13,9 +13,66 @@ import {
   type DarkNode,
   type DarkLink,
   type LinkType,
+  type Gender,
 } from "./data";
 
 type Mode = { kind: "force" } | { kind: "tree"; rootId: string };
+
+// ===== Russian relationship labels =====
+const ANC_M = [
+  "",
+  "отец",
+  "дед",
+  "прадед",
+  "прапрадед",
+  "прапрапрадед",
+  "прапрапрапрадед",
+];
+const ANC_F = [
+  "",
+  "мать",
+  "бабка",
+  "прабабка",
+  "прапрабабка",
+  "прапрапрабабка",
+  "прапрапрапрабабка",
+];
+const DSC_M = [
+  "",
+  "сын",
+  "внук",
+  "правнук",
+  "праправнук",
+  "прапраправнук",
+  "прапрапраправнук",
+];
+const DSC_F = [
+  "",
+  "дочь",
+  "внучка",
+  "правнучка",
+  "праправнучка",
+  "прапраправнучка",
+  "прапрапраправнучка",
+];
+
+function relationLabel(g: Gender, dir: "up" | "down", depth: number): string {
+  if (depth <= 0) return "";
+  const arr =
+    dir === "up" ? (g === "f" ? ANC_F : ANC_M) : g === "f" ? DSC_F : DSC_M;
+  if (depth < arr.length) return arr[depth];
+  // Beyond table — generate dynamically: depth N has (N-2) × "пра" prefix
+  const prefix = "пра".repeat(Math.max(0, depth - 2));
+  const base =
+    dir === "up"
+      ? g === "f"
+        ? "бабка"
+        : "дед"
+      : g === "f"
+        ? "внучка"
+        : "внук";
+  return prefix + base;
+}
 
 type SimNode = DarkNode & d3.SimulationNodeDatum;
 type SimLink = d3.SimulationLinkDatum<SimNode> &
@@ -423,7 +480,7 @@ export default function DarkTree() {
     const rootId = displayMode.rootId;
     const CX = W / 2,
       CY = H / 2;
-    const VGAP = 120,
+    const VGAP = 135,
       HGAP = 110;
 
     type TNode = {
@@ -519,8 +576,8 @@ export default function DarkTree() {
       return { nodes, edges };
     };
 
-    const up = layout(buildAnc(rootId, 3), true);
-    const down = layout(buildDesc(rootId, 3), false);
+    const up = layout(buildAnc(rootId, 4), true);
+    const down = layout(buildDesc(rootId, 4), false);
 
     // ===== Detect ALL paradox ids =====
     // (a) any node flagged during traversal (cycle terminator)
@@ -604,6 +661,7 @@ export default function DarkTree() {
       x: number;
       y: number;
       kind: "root" | "anc" | "desc" | "partner";
+      depth: number;
       isEcho?: boolean;
     };
 
@@ -612,23 +670,37 @@ export default function DarkTree() {
     };
     const drawn = new Set<string>([rootId]);
     const drawables: DrawableEx[] = [
-      { id: rootId, x: CX, y: CY, kind: "root" },
+      { id: rootId, x: CX, y: CY, kind: "root", depth: 0 },
     ];
 
     const consider = (n: LaidNode, kind: "anc" | "desc") => {
       // root reappearing inside its own up/down tree → echo back to center
       if (n.id === rootId) {
-        drawables.push({ id: rootId, x: n.x, y: n.y, kind, isEcho: true });
+        drawables.push({
+          id: rootId,
+          x: n.x,
+          y: n.y,
+          kind,
+          depth: n.depth,
+          isEcho: true,
+        });
         return;
       }
       // explicit paradox terminator OR id already drawn elsewhere → echo
       if (n.paradox || drawn.has(n.id)) {
-        drawables.push({ id: n.id, x: n.x, y: n.y, kind, isEcho: true });
+        drawables.push({
+          id: n.id,
+          x: n.x,
+          y: n.y,
+          kind,
+          depth: n.depth,
+          isEcho: true,
+        });
         return;
       }
       drawn.add(n.id);
       primaryPos[n.id] = { x: n.x, y: n.y };
-      drawables.push({ id: n.id, x: n.x, y: n.y, kind });
+      drawables.push({ id: n.id, x: n.x, y: n.y, kind, depth: n.depth });
     };
 
     up.nodes.filter((n) => n.depth > 0).forEach((n) => consider(n, "anc"));
@@ -637,7 +709,7 @@ export default function DarkTree() {
     partners.forEach((p) => {
       if (!drawn.has(p.id)) {
         drawn.add(p.id);
-        drawables.push({ id: p.id, x: p.x, y: p.y, kind: "partner" });
+        drawables.push({ id: p.id, x: p.x, y: p.y, kind: "partner", depth: 0 });
       }
     });
 
@@ -722,11 +794,26 @@ export default function DarkTree() {
           .attr("fill", "#a83a2e")
           .text(parts[0]);
 
+        // kinship label for echo (relation to root via this path)
+        if ((n.kind === "anc" || n.kind === "desc") && n.depth > 0) {
+          const dir = n.kind === "anc" ? "up" : "down";
+          const lbl = relationLabel(d.gender, dir, n.depth);
+          if (lbl) {
+            g.append("text")
+              .attr("class", "font-display italic pointer-events-none")
+              .attr("text-anchor", "middle")
+              .attr("y", 33)
+              .attr("font-size", "8px")
+              .attr("fill", "#a83a2e")
+              .attr("letter-spacing", "0.5px")
+              .text(`· ${lbl} ·`);
+          }
+        }
         // loop label
         g.append("text")
           .attr("class", "font-mono pointer-events-none paradox-label")
           .attr("text-anchor", "middle")
-          .attr("y", 33)
+          .attr("y", 45)
           .attr("font-size", "6.5px")
           .attr("fill", "#7a2e26")
           .attr("letter-spacing", "1.8px")
@@ -877,6 +964,22 @@ export default function DarkTree() {
           .attr("letter-spacing", "1px")
           .text(`${d.born ?? "?"}  —  ${d.died ?? (d.dead ? "?" : "·")}`);
         extraY += 12;
+      }
+      // === KINSHIP LABEL — degree of relationship to root ===
+      if (!isRoot && (n.kind === "anc" || n.kind === "desc") && n.depth > 0) {
+        const dir = n.kind === "anc" ? "up" : "down";
+        const lbl = relationLabel(d.gender, dir, n.depth);
+        if (lbl) {
+          tg.append("text")
+            .attr("class", "font-display italic pointer-events-none")
+            .attr("text-anchor", "middle")
+            .attr("y", labelY + extraY)
+            .attr("font-size", "9px")
+            .attr("fill", isParadox ? "#a83a2e" : "#c9a049")
+            .attr("letter-spacing", "0.8px")
+            .text(`· ${lbl} ·`);
+          extraY += 13;
+        }
       }
       if (isParadox) {
         tg.append("text")
